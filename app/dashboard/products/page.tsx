@@ -243,30 +243,29 @@ export default function ProductsPage() {
         </CardHeader>
         <CardContent>
           {filteredProducts && filteredProducts.length > 0 ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto whitespace-nowrap">
               <table className="w-full text-sm">
                 <thead className="border-b border-border">
                   <tr className="text-left">
-                    <th className="pb-3 font-semibold text-foreground">SL No.</th>
-                    <th className="pb-3 font-semibold text-foreground">Date</th>
-                    <th className="pb-3 font-semibold text-foreground">Product Name</th>
-                    <th className="pb-3 font-semibold text-foreground">Category</th>
-                    <th className="pb-3 font-semibold text-foreground">Warehouse</th>
-                    <th className="pb-3 font-semibold text-foreground">Unit</th>
-                    <th className="pb-3 font-semibold text-foreground">Purchase Price</th>
-                    <th className="pb-3 font-semibold text-foreground">Wholesale Price</th>
-                    <th className="pb-3 font-semibold text-foreground">Retail Price</th>
-                    <th className="pb-3 font-semibold text-foreground">Quantity</th>
-                    <th className="pb-3 font-semibold text-foreground">Wholesale</th>
-                    <th className="pb-3 font-semibold text-foreground">Retail Sale</th>
-                    <th className="pb-3 font-semibold text-foreground">Total Purchase</th>
-                    <th className="pb-3 font-semibold text-foreground">Total Wholesale</th>
-                    <th className="pb-3 font-semibold text-foreground">Total Retail</th>
-                    <th className="pb-3 font-semibold text-foreground">Wholesale Profit</th>
-                    <th className="pb-3 font-semibold text-foreground">Retail Profit</th>
-                    <th className="pb-3 font-semibold text-foreground">Margin %</th>
-                    <th className="pb-3 font-semibold text-foreground">Edit</th>
-                    <th className="pb-3 font-semibold text-foreground">Delete</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">SL No.</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Date</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Product Name</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Category</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Warehouse</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Unit</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Purchase Price</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Wholesale Price</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Retail Price</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Quantity</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Wholesale</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Retail Sale</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Total Purchase</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Total Wholesale</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Total Retail</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Wholesale Profit</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Retail Profit</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Margin %</th>
+                    <th className="pb-3 font-semibold text-foreground px-2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -282,11 +281,11 @@ export default function ProductsPage() {
                     
                     return (
                     <tr key={product.id} className="border-b border-border hover:bg-muted/50 transition-colors">
-                      <td className="py-3 text-muted-foreground font-mono text-xs">{index + 1}</td>
-                      <td className="py-3 text-muted-foreground text-xs">
+                      <td className="py-3 text-muted-foreground font-mono text-xs px-2">{index + 1}</td>
+                      <td className="py-3 text-muted-foreground text-xs px-2">
                         {new Date(product.created_at).toLocaleDateString()}
                       </td>
-                      <td className="py-3">
+                      <td className="py-3 px-2 max-w-xs truncate" title={product.name}>
                         <Link
                           href={`/dashboard/products/${product.id}`}
                           className="text-primary hover:underline font-medium"
@@ -294,45 +293,54 @@ export default function ProductsPage() {
                           {product.name}
                         </Link>
                       </td>
-                      <td className="py-3 text-muted-foreground">{product.categories?.name || "Uncategorized"}</td>
-                      <td className="py-3 text-muted-foreground">
-                        {product.warehouses.map(w => w.name).join(", ") || "No warehouse"}
+                      <td className="py-3 text-muted-foreground px-2" title={product.categories?.name || "Uncategorized"}>
+                        <span className="truncate inline-block max-w-[100px]">
+                          {product.categories?.name || "Uncategorized"}
+                        </span>
                       </td>
-                      <td className="py-3">1</td>
-                      <td className="py-3">${product.purchase_price.toFixed(2)}</td>
-                      <td className="py-3 font-semibold">${product.wholesale_price?.toFixed(2) || "N/A"}</td>
-                      <td className="py-3 font-semibold">${product.retail_price?.toFixed(2) || "N/A"}</td>
-                      <td className="py-3">{product.total_quantity}</td>
-                      <td className="py-3 font-semibold">{product.wholesale_sold}</td>
-                      <td className="py-3 font-semibold">{product.retail_sold}</td>
-                      <td className="py-3 font-semibold">${totalPurchase.toFixed(2)}</td>
-                      <td className="py-3 font-semibold">${totalWholesale.toFixed(2)}</td>
-                      <td className="py-3 font-semibold">${totalRetail.toFixed(2)}</td>
-                      <td className="py-3 font-semibold">${wholesaleProfit.toFixed(2)}</td>
-                      <td className="py-3 font-semibold">${retailProfit.toFixed(2)}</td>
-                      <td className="py-3">
+                      <td className="py-3 text-muted-foreground px-2" title={product.warehouses.map(w => w.name).join(", ") || "No warehouse"}>
+                        <span className="truncate inline-block max-w-[100px]">
+                          {product.warehouses.map(w => w.name).join(", ") || "No warehouse"}
+                        </span>
+                      </td>
+                      <td className="py-3 px-2">1</td>
+                      <td className="py-3 px-2">${product.purchase_price.toFixed(2)}</td>
+                      <td className="py-3 font-semibold px-2">${product.wholesale_price?.toFixed(2) || "N/A"}</td>
+                      <td className="py-3 font-semibold px-2">${product.retail_price?.toFixed(2) || "N/A"}</td>
+                      <td className="py-3 px-2">{product.total_quantity}</td>
+                      <td className="py-3 font-semibold px-2">{product.wholesale_sold}</td>
+                      <td className="py-3 font-semibold px-2">{product.retail_sold}</td>
+                      <td className="py-3 font-semibold px-2">${totalPurchase.toFixed(2)}</td>
+                      <td className="py-3 font-semibold px-2">${totalWholesale.toFixed(2)}</td>
+                      <td className="py-3 font-semibold px-2">${totalRetail.toFixed(2)}</td>
+                      <td className="py-3 font-semibold px-2">${wholesaleProfit.toFixed(2)}</td>
+                      <td className="py-3 font-semibold px-2">${retailProfit.toFixed(2)}</td>
+                      <td className="py-3 px-2">
                         <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300 font-medium text-xs">
                           {marginPercent.toFixed(2)}%
                         </span>
                       </td>
-                      <td className="py-3">
-                        <Link href={`/dashboard/products/${product.id}/edit`}>
-                          <Button variant="ghost" size="sm" className="gap-1">
-                            <Edit2 className="w-4 h-4" />
-                            <span className="hidden sm:inline">Edit</span>
+                      <td className="py-3 px-2">
+                        <div className="flex gap-1">
+                          <Link href={`/dashboard/products/${product.id}`}>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Package className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                          <Link href={`/dashboard/products/${product.id}/edit`}>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(product.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </Button>
-                        </Link>
-                      </td>
-                      <td className="py-3">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="text-destructive hover:text-destructive gap-1"
-                          onClick={() => handleDelete(product.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                          <span className="hidden sm:inline">Delete</span>
-                        </Button>
+                        </div>
                       </td>
                     </tr>
                     )
